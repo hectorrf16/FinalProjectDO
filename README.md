@@ -1,4 +1,4 @@
-# Final Project DO 2023 - GeeksHubs
+# Final Project Bootcamp DevOps 2023 - GeeksHubs
 ##### Este es el proyecto final del Bootcamp de DevOps de Héctor Rodríguez Fusté impartido por GeeksHbubs 
 ----
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/hectorrf16/FinalProjectDO?style=plastic)
@@ -24,7 +24,7 @@
 - [ ] Analisis perfomance de la Infra
 
 # Diseño infraestructura
-![Diagrama Infra](screenshots\diagrama.png)
+![Diagrama Infra](./screenshots/diagrama.png)
 
 # Memoria
 ## **APLICACIÓN** 
