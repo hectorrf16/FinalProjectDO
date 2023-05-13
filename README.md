@@ -9,11 +9,11 @@
 # Por Hacer
 - [ ] Aplicación desarrollada en Python
 - [X] Sistema de Integración Continua - https://github.com/hectorrf16/FinalProjectDO
-- [ ] Aplicación totalmente Contenerizada - Imagen en https://hub.docker.com/r/hectorrf16/finalprojectdo
+- [X] Aplicación totalmente Contenerizada - Imagen en https://hub.docker.com/r/hectorrf16/finalprojectdo
 - [ ] Orquestador de Contenedores
 - [ ] Sistema Automatizado de Despliegue
 - [ ] Sistema de Monitorización
-- [ ] Sistema de Recogida de información de Contenedores en Grafana
+- [X] Sistema de Recogida de información de Contenedores en Grafana
 - [ ] Sistema de Exposición de información de Contenedores en Grafana
 
 # Posibles Mejoras
@@ -45,7 +45,7 @@ Para la instalacion en cloud, se va a implementar en Kubernete y en AWS, porque 
 Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el proceso.
 
 ```
-"FinalProjectDOQ"
+"FinalProjectDO"
 ├── "docker"
 │   ├── "grafana"
 │   │   └── "provisioning"
@@ -70,8 +70,11 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 ├── "README.md"
 ├── "run.sh"
 └── "screenshots"
+    ├── "scriptmenu.png"
+    ├── "repairmenu.png"
+    └── "dockerlist.png"
 
-10 directories, 14 files
+10 directories, 17 files
 ```
 
 ## **CONTAINER**
@@ -85,13 +88,24 @@ Aqui teneis imagen para mostrar un poco de informacion de como estan trabajando 
 <!-- ![Docker List](https://github.com/hectorrf16/FinalProjectDO/screenshots/dockerlist.png) This should be uncomment when project is finished -->
 ![Docker List](screenshots/dockerlist.png)
 
-Para empezar la creacion de los contenedores, solo tenemos que ejecutar el `run.sh` de la raiz del repositorio, el mismo empezara a crear todo lo necesario para
+Para empezar la creacion de los contenedores, solo tenemos que ejecutar el `run.sh` de la raiz del repositorio, el mismo empezara a crear todo lo necesario para poder tener en un par de segundos los contenedores corriendo. El propio script de inicializacion tiene un menu para poder elegir que hacer, es decir, con el mismo script podremos aplicar cambios para tenerlo en local, para tener la infraestructura en el cloud.
+
+Para poder ejecutar la app, dale permisos de ejecucion para el owner, es decir, tu usuario
+> sudo chmod 744 ./run.sh
+
+Una vez ejecutado el script (`$ sh ./run.sh`), este sera el menu que vereis y que podreis interactuar
+<!-- ![Script Menu](https://github.com/hectorrf16/FinalProjectDO/screenshots/scriptmenu.png) This should be uncomment when project is finished -->
+![Script Menu](screenshots/scriptmenu.png)
+
+1. Menu para elegir la instalacion en local utilizando docker.  
+2. Menu para elegir la instalacion en el cloud con AWS y Kubernetes.
+3. Menu para reparar la instancia en local
+ 
+
+<!-- ![Repair Menu](https://github.com/hectorrf16/FinalProjectDO/screenshots/repairmenu.png) This should be uncomment when project is finished -->
+![Repair Menu](screenshots/repairmenu.png)
 
 ## **ORQUESTADOR CONTAINERS**
 ## **SISTEMA DE DESPLIEGUE**
 ## **SISTEMA DE MONITORIZACIÓN**
 ## **SISTEMA DE RECOGIDA Y EXPOSICIÓN DE DATOS**
-
-# Webgrafia
-- Ayuda para elegir buena base de datos y buen frontend/backend para trabajar con Vue: https://www.reddit.com/r/vuejs/comments/j7hw6d/best_practices_for_using_databases_with_vuejs/
-- 
