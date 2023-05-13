@@ -81,7 +81,8 @@ Como no se como va a acabar el proyecto, la primera idea es de tener 4 contenedo
 - Contenedor para el sistema de Monitorización en Grafana
 - 
 Aqui teneis imagen para mostrar un poco de informacion de como estan trabajando los contenedores
-![Docker List](https://github.com/hectorrf16/FinalProjectDO/screenshots/dockerlist.png)
+<!-- ![Docker List](https://github.com/hectorrf16/FinalProjectDO/screenshots/dockerlist.png) This should be uncomment when project is finished -->
+![Docker List](,screenshots\dockerlist.png)
 
 Para empezar la creacion de los contenedores, solo tenemos que ejecutar el `run.sh` de la raiz del repositorio, el mismo empezara a crear todo lo necesario para
 
