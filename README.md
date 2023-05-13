@@ -85,8 +85,8 @@ Como no se como va a acabar el proyecto, la primera idea es de tener 4 contenedo
 - Contenedor para el sistema de Monitorización en Grafana
 - 
 Aqui teneis imagen para mostrar un poco de informacion de como estan trabajando los contenedores
-<!-- ![Docker List](https://github.com/hectorrf16/FinalProjectDO/screenshots/dockerlist.png) This should be uncomment when project is finished -->
-![Docker List](screenshots/dockerlist.png)
+![Docker List](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerlist.png)
+<!-- ![Docker List](screenshots/dockerlist.png) -->
 
 Para empezar la creacion de los contenedores, solo tenemos que ejecutar el `run.sh` de la raiz del repositorio, el mismo empezara a crear todo lo necesario para poder tener en un par de segundos los contenedores corriendo. El propio script de inicializacion tiene un menu para poder elegir que hacer, es decir, con el mismo script podremos aplicar cambios para tenerlo en local, para tener la infraestructura en el cloud.
 
@@ -94,16 +94,17 @@ Para poder ejecutar la app, dale permisos de ejecucion para el owner, es decir, 
 > sudo chmod 744 ./run.sh
 
 Una vez ejecutado el script (`$ sh ./run.sh`), este sera el menu que vereis y que podreis interactuar
-<!-- ![Script Menu](https://github.com/hectorrf16/FinalProjectDO/screenshots/scriptmenu.png) This should be uncomment when project is finished -->
-![Script Menu](screenshots/scriptmenu.png)
+
+![Script Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/scriptmenu.png)
+<!-- ![Script Menu](screenshots/scriptmenu.png) -->
 
 1. Menu para elegir la instalacion en local utilizando docker.  
 2. Menu para elegir la instalacion en el cloud con AWS y Kubernetes.
 3. Menu para reparar la instancia en local
  
 
-<!-- ![Repair Menu](https://github.com/hectorrf16/FinalProjectDO/screenshots/repairmenu.png) This should be uncomment when project is finished -->
-![Repair Menu](screenshots/repairmenu.png)
+![Repair Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/repairmenu.png)
+<!-- ![Repair Menu](screenshots/repairmenu.png) -->
 
 ## **ORQUESTADOR CONTAINERS**
 ## **SISTEMA DE DESPLIEGUE**
