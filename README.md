@@ -24,7 +24,7 @@
 - [ ] Analisis perfomance de la Infra
 
 # Diseño infraestructura
-![Diagrama Infra](./screenshots/diagrama.png)
+![Diagrama Infra](screenshots/diagrama.png)
 
 # Memoria
 ## **APLICACIÓN** 
