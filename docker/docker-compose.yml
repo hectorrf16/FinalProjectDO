@@ -1,7 +1,6 @@
 services:
   app:
-    # image: hectorrf16/finalprojectdo:latest
-    image: finalprojectdo:app
+    build: .
     container_name: python-app
     stdin_open: true
     tty: true

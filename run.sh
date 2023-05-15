@@ -15,38 +15,41 @@ menu() {
 
     COLUMNS=12
     PS3="Please, enter your choice: "
-    options=("Install local instance" "Install cloud instance" "Repair local instance")
+    containers=("app" "pgadmin" "grafana" "postgres")
+    options=("Install local instance" "Start local instance" "Repair local instance" "Uninstall local instance" "Upload local image to Docker Hub" "Install cloud instance")
     echo -e "What do you want to do?\n"
     select opt in "${options[@]}" Quit
     do
         case $opt in
             "Install local instance")
                 username=$(whoami)
+                dir=$(pwd)
                 
-                if [-d "./docker"]
+                if [ -d "$dir/docker" ]
                 then
                         echo "Running Containers Creation"
-                        sudo docker build --pull --rm -f app-dockerfile -t finalprojectdo:app
-                        sudo docker ps | awk  '$NF ~/python/{print $1}' | xargs -i docker container commit '{}' add && docker image tag app:latest hectorrf16/finalprojectdo && docker image push hectorrf16/finalprojectdo
-                        sudo docker compose up -d
+                        cd docker
+                        sudo docker compose up -d 
                         sudo docker ps
+
                 else
                     echo "Error: Files doesn't exists, dowloading" 
-                    if [-d "./.git"]
+                    if [ -d "$dir/.git" ]
                     then
                         git pull origin main
                     else
-                        git clone https://github.com/hectorrf16/finalprojectdo ../finalprojectdo
+                        git clone https://github.com/hectorrf16/FinalProjectDO ../FinalProjectDO
                     fi
                 fi
                 break;;
-
-            "Install cloud instance")
-                echo "Working on it"
+            "Start local instance")
+                echo "Starting the installed instance"
+                cd docker
+                sudo docker compose up -d
                 break;;
-
             "Repair local instance")
                 clear
+                cd docker
                 repairoptions=("Postgres" "App" "PdAgmin" "Grafana" "All")
                 echo -e "What instance would you like to repair?\n"
                 select ropt in "${repairoptions[@]}" Quit
@@ -77,7 +80,24 @@ menu() {
                         *) echo "Invalid option \"$REPLY\"";;
                     esac
                 done
+                break;;
+            "Uninstall local instance")
+                cd docker
+                echo "Uninstalling local instance"
+                docker compose down && docker volume rm docker_postgres-db docker_grafana-data docker_pgadmin-data
+                break;;
+            "Upload local image to Docker Hub") 
+                echo "Login into Docker Hub"
+                docker login
+                echo "Uploading images to docker hub"
+                for i in "${containers[@]}"
+                do
+                    sudo docker ps | grep $i | awk '{print $2}' | xargs -i docker tag {} hectorrf16/finalprojectdo:$i && docker image push hectorrf16/finalprojectdo:$i
+                done
 
+                break;;
+            "Install cloud instance")
+                echo "Working on it"
                 break;;
 
             "Quit")

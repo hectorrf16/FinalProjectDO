@@ -4,7 +4,7 @@ datasources:
   url: $DATABASE_HOST:$DATABASE_PORT
   user: $DATABASE_USER
   database: $DATABASE_NAME
-  password: managerit
+  password: ""
   access: proxy
   basicAuth: false
   withCredentials: false
