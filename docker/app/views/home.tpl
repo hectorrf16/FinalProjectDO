@@ -14,11 +14,31 @@
       <div class = "card-panel purple darken-3"><h3>Héctor Rodríguez Fusté - Final Project DevOps</h3></div>
       <div class="row">
         <div class="col s12">
-            <dl>
-              <dt>test 1</dt>
-              <dt>test 2</dt>
-              <dt>test 3</dt>
-            </dl>
+          <h3>Mockup</h2>
+          <h5>Data from this table doesn't match with Database's</h3>
+            <br></br>
+            <table class="responsible-table">
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+              </tr>
+              <tr>
+                <th>1</th>
+                <th>Orange</th>
+                <th>50</th>
+              </tr>
+              <tr>
+                <th>2</th>
+                <th>Strawberry</th>
+                <th>26</th>
+              </tr>
+              <tr>
+                <th>3</th>
+                <th>Flamingos</th>
+                <th>151</th>
+              </tr>
+            </table>
         </div>
       </div>
       <!--JavaScript at end of body for optimized loading-->

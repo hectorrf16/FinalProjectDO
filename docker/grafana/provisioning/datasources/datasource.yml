@@ -1,18 +1,27 @@
+apiVersion: 1
+
 datasources:
 - name: db
   type: postgres
-  url: $DATABASE_HOST:$DATABASE_PORT
-  user: $DATABASE_USER
-  database: $DATABASE_NAME
+  url: db:5432
+  user: hector
+  database: finalproject
   password: ""
   access: proxy
   basicAuth: false
+  uid: "P7BDC25D1694EF984"
   withCredentials: false
   isDefault: true
-  secureJsonData:
-    password: $DATABASE_PASS
   jsonData:
     postgresVersion: 1000
-    sslmode: disable
+    sslmode: verify-full
+    tlsAuth: true
+    tlsAuthWithCACert: true
+    tlsSkipVerify: true
+  secureJsonData:
+    password: managerit
+    tlsCACert: $__file{/tmp/server.csr}
+    tlsClientCert: $__file{/tmp/server.crt}
+    # tlsClientkey: $__file{/tmp/server.key}
   version: 1
   editable: true

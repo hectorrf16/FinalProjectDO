@@ -7,10 +7,10 @@
 ![GitHub Issues Count](https://img.shields.io/github/issues-raw/hectorrf16/finalprojectdo?style=plastic)
 
 # Por Hacer
-- [ ] Aplicación desarrollada en Python
+- [X] Aplicación desarrollada en Python
 - [X] Sistema de Integración Continua - https://github.com/hectorrf16/FinalProjectDO
 - [X] Aplicación totalmente Contenerizada - Imagen en https://hub.docker.com/r/hectorrf16/finalprojectdo
-- [ ] Orquestador de Contenedores
+- [X] Orquestador de Contenedores
 - [ ] Sistema Automatizado de Despliegue
 - [ ] Sistema de Monitorización
 - [X] Sistema de Recogida de información de Contenedores en Grafana
@@ -49,8 +49,14 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 ├── "docker"
 │   ├── "grafana"
 │   │   └── "provisioning"
-│   │       └── "datasources"
-│   │           └── "datasource.yml"
+│   │       ├── "datasources"
+│   │       │   ├── "datasource.yml"
+│   │       │   └── "dashboards"
+│   │       │       └── "home.json"
+│   │       └── "dashboards.yml"
+│   ├── "database"
+│   │   ├── "servers.json"
+│   │   └── "query.sql"
 │   ├── "docker-compose.yml"
 │   ├── "app"
 │   │   ├── "app.py"
@@ -70,13 +76,14 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 ├── "README.md"
 ├── "run.sh"
 └── "screenshots"
+    ├── "scriptmenu2.png"
     ├── "dockerhub.png"
     ├── "scriptmenu.png"
     ├── "dockerimages.png"
     ├── "repairmenu.png"
     └── "dockerlist.png"
 
-10 directories, 19 files
+12 directories, 24 files
 ```
 
 ## **CONTAINER**
@@ -97,22 +104,27 @@ Para poder ejecutar la app, dale permisos de ejecucion para el owner, es decir, 
 
 Una vez ejecutado el script (`$ sh ./run.sh`), este sera el menu que vereis y que podreis interactuar
 
-<!-- ![Script Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/scriptmenu.png) -->
-![Script Menu](screenshots/scriptmenu.png)
+![Script Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/scriptmenu.png)
+<!-- ![Script Menu](screenshots/scriptmenu.png) -->
 
-1. Menu para elegir la instalación en local utilizando docker.  
+1. Menu para acceder al menu de instalación en local con docker.  
+2. Menu para acceder al menu de instalación en cloud con AWS y Kubernetes.
+
+![Script Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/scriptmenu2.png)
+<!-- ![Script Menu](screenshots/scriptmenu2.png) -->
+
+1. Menu para elegir la instalación en local.  
 2. Menu para elegir iniciar la instalación en local.  
 3. Menu para elegir reparar la instancia en local.  
 ![Repair Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/repairmenu.png)
 <!-- ![Repair Menu](screenshots/repairmenu.png) -->
-4. Menu para elegir desinstalar la instancia en local.  
-5. Menu para elegir la subida de todas las imagenes en local en un repo en Docker con formato 'nombreusuario'/'nombrerepor':'nombreservicio'.  
-<!-- ![Repair Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerhub.png) -->
- ![Repair Menu](screenshots/dockerhub.png)
-<!-- ![Repair Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerimages.png) -->
- ![Repair Menu](screenshots/dockerimages.png)
+1. Menu para elegir desinstalar la instancia en local.  
+2. Menu para elegir la subida de todas las imagenes en local en un repo en Docker con formato 'nombreusuario'/'nombrerepor':'nombreservicio'.  
+![Repair Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerhub.png)
+ <!-- ![Repair Menu](screenshots/dockerhub.png) -->
+![Repair Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerimages.png)
+ <!-- ![Repair Menu](screenshots/dockerimages.png) -->
 
-6. Menu para elegir la instalacion en el cloud con AWS y Kubernetes.
  
 
 

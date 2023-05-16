@@ -17,6 +17,7 @@ services:
     image: postgres:alpine
     container_name: postgres
     restart: always
+    # command: -c ssl=on -c ssl_cert_file=/var/lib/postgresql/server.crt -c ssl_key_file=/var/lib/postgresql/server.key
     environment:
       - POSTGRES_USER=hector
       - POSTGRES_PASSWORD=managerit
@@ -26,12 +27,16 @@ services:
       - 5432:5432
     volumes:
       - postgres-db:/var/lib/postgresql/data
-
+      - ./database/run.sh:/run.sh
+      - ./database:/tmp
+  
   pgadmin:
     # image: dpage/pgadmin4:7
     image: dpage/pgadmin4:latest
     container_name: pgadmin
     restart: always
+    depends_on:
+      - db
     environment:
       - PGADMIN_DEFAULT_EMAIL=hectoor.16@icloud.com
       - PGADMIN_DEFAULT_PASSWORD=managerit
@@ -43,16 +48,22 @@ services:
       - 5050:80
     volumes:
       - pgadmin-data:/pgadmin4
+      - ./database/servers.json:/pgadmin4/servers.json
   
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     restart: always
+    depends_on:
+      - db
     ports: 
       - 3000:3000
     volumes:
-      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml
+      - ./grafana/provisioning/datasources/dashboards:/dashboards
+      - ./database/:/home/tmp
     environment:
       - DATABASE_USER=hector
       - DATABASE_PASS=managerit
