@@ -27,11 +27,10 @@ services:
       - 5432:5432
     volumes:
       - postgres-db:/var/lib/postgresql/data
-      - ./database/run.sh:/run.sh
+      - ./runs/psrun.sh:/tmp/psrun.sh
       - ./database:/tmp
   
   pgadmin:
-    # image: dpage/pgadmin4:7
     image: dpage/pgadmin4:latest
     container_name: pgadmin
     restart: always
@@ -48,12 +47,16 @@ services:
       - 5050:80
     volumes:
       - pgadmin-data:/pgadmin4
-      - ./database/servers.json:/pgadmin4/servers.json
+      - ./database/pgadmin/servers.json:/pgadmin4/servers.json
+      - ./database/pgadmin/pgpassfile:/tmp/pgpassfile
+      - ./runs/pgrun.sh:/tmp/pgrun.sh
+
   
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     restart: always
+    user: root
     depends_on:
       - db
     ports: 
@@ -64,6 +67,8 @@ services:
       - ./grafana/provisioning/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml
       - ./grafana/provisioning/datasources/dashboards:/dashboards
       - ./database/:/home/tmp
+      - ./runs/grafanarun.sh:/tmp/grafanarun.sh
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
     environment:
       - DATABASE_USER=hector
       - DATABASE_PASS=managerit

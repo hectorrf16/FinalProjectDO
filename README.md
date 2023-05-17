@@ -11,9 +11,9 @@
 - [X] Sistema de Integración Continua - https://github.com/hectorrf16/FinalProjectDO
 - [X] Aplicación totalmente Contenerizada - Imagen en https://hub.docker.com/r/hectorrf16/finalprojectdo
 - [X] Orquestador de Contenedores
-- [ ] Sistema Automatizado de Despliegue
+- [ ] Sistema Automatizado de Despliegue con Jenkins
 - [ ] Sistema de Monitorización
-- [X] Sistema de Recogida de información de Contenedores en Grafana
+- [X] Sistema de Recogida de información de Contenedores con Prometheus
 - [ ] Sistema de Exposición de información de Contenedores en Grafana
 
 # Posibles Mejoras
@@ -48,15 +48,27 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 "FinalProjectDO"
 ├── "docker"
 │   ├── "grafana"
+│   │   ├── "grafana.ini"
 │   │   └── "provisioning"
 │   │       ├── "datasources"
 │   │       │   ├── "datasource.yml"
 │   │       │   └── "dashboards"
 │   │       │       └── "home.json"
 │   │       └── "dashboards.yml"
+│   ├── "runs"
+│   │   ├── "psrun.sh"
+│   │   ├── "pgrun.sh"
+│   │   └── "grafanarun.sh"
 │   ├── "database"
-│   │   ├── "servers.json"
-│   │   └── "query.sql"
+│   │   ├── "psrun.sh"
+│   │   ├── "server.csr"
+│   │   ├── "server.key"
+│   │   ├── "query.sql"
+│   │   ├── "pgadmin"
+│   │   │   ├── "pgpassfile"
+│   │   │   └── "servers.json"
+│   │   ├── "postgresql.conf"
+│   │   └── "server.crt"
 │   ├── "docker-compose.yml"
 │   ├── "app"
 │   │   ├── "app.py"
@@ -76,14 +88,16 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 ├── "README.md"
 ├── "run.sh"
 └── "screenshots"
+    ├── "grafanaissue1.png"
     ├── "scriptmenu2.png"
     ├── "dockerhub.png"
     ├── "scriptmenu.png"
     ├── "dockerimages.png"
+    ├── "grafanaissue1-fix.png"
     ├── "repairmenu.png"
     └── "dockerlist.png"
 
-12 directories, 24 files
+14 directories, 36 files
 ```
 
 ## **CONTAINER**
@@ -125,10 +139,20 @@ Una vez ejecutado el script (`$ sh ./run.sh`), este sera el menu que vereis y qu
 ![Repair Menu](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerimages.png)
  <!-- ![Repair Menu](screenshots/dockerimages.png) -->
 
- 
-
-
 ## **ORQUESTADOR CONTAINERS**
+Aqui vamos a tener dos orquestradores de containers. El de instalacion local sera docker-compose y el de cloud sera Kubernetes. He decidido utilizar diferentes por una simpple cosa, kubernetes es mas facil de instalar en cloud, ya que muchos servicios te dan la solucion ya montada y solo tienes que crear los clusters y distribuir, en vez de hacer instalacion en local con minikube o kind, lanzar creacion cluster, hacerla funcionar y de ahi lanzar el deploy de los Pods / containers. Como hago todo desde una maquina en WSL desde win 11, he preferido hacer la configuracion e instalacion lo mas facil y ligera posible.
 ## **SISTEMA DE DESPLIEGUE**
+Para el despliegue vamos a utilizar jenkins, ya que es facil de configurar, de instalar y por lo menos es uno que ya conozco, por lo que no tengo que perder tiempo aprendiendo a utilizarlo, configurarlo y debuggear cualquier error que me de.
 ## **SISTEMA DE MONITORIZACIÓN**
 ## **SISTEMA DE RECOGIDA Y EXPOSICIÓN DE DATOS**
+El sistema de cecogida y exposicion de datos sera Grafana y Prometheus, Grafana para exponer los datos en varios dashboards y Prometheus para obtener los datos de docker y trasportarlos a grafana, para que los exponga.
+# **ISSUES**
+En este apartado vamos a colocar todos los issues que he tenido y que no he podido arreglar y que se quedan para su investigacion. Todo estara documentado en la pagina de issue en [Github](https://github.com/hectorrf16/FinalProjectDO/issues). Tambien al principio de la memoria se puede ver la etiqueta de la cantidad de Issues que hay, por lo que a medida que el projecto avanza, se iran actualizando.
+
+## **SISTEMA DE EXPOSICION DE DATOS**
+> **16.05.2023** - Grafana no es capad de conectar con la base de datos, teniendo un datasource configurado, todo porque coge los datos que le da la gana. La base de datos esta configurada para no utilizar SSL/TLS, pero grafana no es capaz de detectarlo y cuando conecta no es capaz de correr ninguna query por el error de Conexion
+> 
+> ![grafana-issue1](screenshots/grafanaissue1.png)
+> 
+> **17.05.2023** - Respuesta / Solución
+> ![grafana-issue1-fix](screenshots/grafanaissue1-fix.png)

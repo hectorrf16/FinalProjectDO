@@ -14,14 +14,14 @@ datasources:
   isDefault: true
   jsonData:
     postgresVersion: 1000
-    sslmode: verify-full
-    tlsAuth: true
-    tlsAuthWithCACert: true
-    tlsSkipVerify: true
+    sslmode: disable
+    # tlsAuth: true
+    # tlsAuthWithCACert: true
+    # tlsSkipVerify: true
   secureJsonData:
     password: managerit
-    tlsCACert: $__file{/tmp/server.csr}
-    tlsClientCert: $__file{/tmp/server.crt}
+    # tlsCACert: $__file{/tmp/server.csr}
+    # tlsClientCert: $__file{/tmp/server.crt}
     # tlsClientkey: $__file{/tmp/server.key}
   version: 1
   editable: true

@@ -44,12 +44,16 @@ menu() {
                                     sudo docker ps
                                     sleep 5
                                     clear
-                                    echo "Applying first config to Database"
-                                    sudo docker exec -it postgres sh /tmp/run.sh
+                                    echo "First Config - Postgres"
+                                    sudo docker exec -it postgres sh /tmp/psrun.sh
                                     sleep 2
                                     clear
-                                    echo "Copying Certs in Grafana"
+                                    echo "First Config - Grafana"
                                     sudo docker exec -it grafana sh /tmp/grafanarun.sh
+                                    sleep 2
+                                    clear
+                                    echo "First Config - PgAdmin"
+                                    sudo docker exec -it pgadmin sh /tmp/pgrun.sh
                             else
                                 echo "Error: Files doesn't exists, dowloading" 
                                 if [ -d "$dir/.git" ]
@@ -79,8 +83,8 @@ menu() {
                                         sudo docker stop postgres && sudo docker remove postgres && sudo docker volume rm docker_postgres-db && sudo docker compose up -d db
                                         sleep 5
                                         clear
-                                        echo "Applying first config into Database"
-                                        sudo docker exec -ti postgres sh /tmp/run.sh
+                                        echo "First Config - Postgres"
+                                        sudo docker exec -ti postgres sh /tmp/psrun.sh
                                         break;;
                                     "App")
                                         clear
@@ -91,6 +95,10 @@ menu() {
                                         clear
                                         echo "Restoring PgAdmin instance"
                                         sudo docker stop pgadmin && sudo docker remove pgadmin && sudo docker volume rm docker_pgadmin-data && sudo docker compose up -d pgadmin
+                                        sleep 2
+                                        clear
+                                        echo "First Config - PgAdmin"
+                                        sudo docker exec -ti pgadmin sh /tmp/pgrun.sh
                                         break;;
                                     "Grafana")
                                         clear
@@ -98,8 +106,8 @@ menu() {
                                         sudo docker stop grafana && sudo docker remove grafana && sudo docker volume rm docker_grafana-data && sudo docker compose up -d grafana
                                         sleep 2
                                         clear
-                                        echo "Applying fist config"
-                                        sudo docker exec -it grafana sh /home/tmp/grafanarun.sh
+                                        echo "First Config - Grafana"
+                                        sudo docker exec -it grafana sh /tmp/grafanarun.sh
                                         break;;
                                     "All")
                                         clear
