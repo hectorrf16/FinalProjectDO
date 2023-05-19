@@ -1,3 +1,3 @@
-./*/*.crt
-./*/*.csr
-./*/*.key
+docker/database/server.crt
+docker/database/server.csr
+docker/database/server.key
