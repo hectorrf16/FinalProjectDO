@@ -145,9 +145,9 @@
       "id": 2,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "sum"
@@ -155,7 +155,8 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "text": {},
+        "textMode": "value_and_name"
       },
       "pluginVersion": "9.5.2",
       "targets": [
@@ -167,7 +168,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "select count(id) from items;",
+          "rawSql": "select count(id) as \"Total Items\" from items;",
           "refId": "A",
           "sql": {
             "columns": [
@@ -188,7 +189,6 @@
           }
         }
       ],
-      "title": "Total of Items",
       "type": "stat"
     },
     {
@@ -202,19 +202,22 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-red",
                 "value": null
               },
               {
-                "color": "red",
-                "value": 80
+                "color": "dark-green",
+                "value": 10
               }
             ]
-          }
+          },
+          "unit": "none"
         },
         "overrides": []
       },
@@ -281,20 +284,25 @@
           "color": {
             "mode": "thresholds"
           },
+          "custom": {},
           "mappings": [],
+          "max": 100,
+          "min": 0,
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-red",
                 "value": null
               },
               {
-                "color": "red",
-                "value": 80
+                "color": "dark-green",
+                "value": 10
               }
             ]
-          }
+          },
+          "unit": "none"
         },
         "overrides": []
       },
@@ -362,19 +370,22 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-red",
                 "value": null
               },
               {
-                "color": "red",
-                "value": 80
+                "color": "dark-green",
+                "value": 10
               }
             ]
-          }
+          },
+          "unit": "none"
         },
         "overrides": []
       },
@@ -442,19 +453,22 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-red",
                 "value": null
               },
               {
-                "color": "red",
-                "value": 80
+                "color": "dark-green",
+                "value": 10
               }
             ]
-          }
+          },
+          "unit": "none"
         },
         "overrides": []
       },

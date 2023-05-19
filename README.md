@@ -14,8 +14,8 @@
 - [X] Orquestador de Contenedores
 - [ ] Sistema Automatizado de Despliegue con Jenkins
 - [ ] Sistema de Monitorización
-- [X] Sistema de Recogida de información de Contenedores con Prometheus
-- [ ] Sistema de Exposición de información de Contenedores en Grafana
+- [ ] Sistema de Recogida de información de Contenedores con Prometheus
+- [X] Sistema de Exposición de información de Contenedores en Grafana
 
 # Posibles Mejoras
 - [ ] Despliegue de Infra en Cloud
@@ -102,15 +102,16 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 ```
 
 ## **CONTAINER**
-Como no se como va a acabar el proyecto, la primera idea es de tener 4 contenedores, y si por alguna razón he de añadir mas, ya seria como complemento de alguna utilidad
+Como no se como va a acabar el proyecto, la primera idea es de tener 5 contenedores, y si por alguna razón he de añadir mas, ya seria como complemento de alguna utilidad
 - Contenedor con Python para tener una web y poder mostrar la información / datos
 - Contenedor con una base de datos Postgresql para almacenar los datos a mostrar en la web
 - Contenedor con PgAdmin4 para poder modificar la base de datos de forma visual a traves de una web para no tener que estar haciendo siempre queries sql (para testing o rapidos workarounds)
 - Contenedor para el sistema de Monitorización en Grafana
-- 
+- Contenedor para hospedar el servicio de Jenkins
+  
 Aqui teneis imagen para mostrar un poco de informacion de como estan trabajando los contenedores
-![Docker List](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerlist.png)
-<!-- ![Docker List](screenshots/dockerlist.png) -->
+<!-- ![Docker List](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerlist.png) -->
+![Docker List](screenshots/dockerlist.png)
 
 Para empezar la creacion de los contenedores, solo tenemos que ejecutar el `run.sh` de la raiz del repositorio, el mismo empezara a crear todo lo necesario para poder tener en un par de segundos los contenedores corriendo. El propio script de inicializacion tiene un menu para poder elegir que hacer, es decir, con el mismo script podremos aplicar cambios para tenerlo en local, para tener la infraestructura en el cloud.
 

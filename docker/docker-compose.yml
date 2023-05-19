@@ -1,6 +1,8 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: app-dockerfile
     container_name: python-app
     stdin_open: true
     tty: true
@@ -17,7 +19,6 @@ services:
     image: postgres:alpine
     container_name: postgres
     restart: always
-    # command: -c ssl=on -c ssl_cert_file=/var/lib/postgresql/server.crt -c ssl_key_file=/var/lib/postgresql/server.key
     environment:
       - POSTGRES_USER=hector
       - POSTGRES_PASSWORD=managerit
@@ -75,11 +76,32 @@ services:
       - DATABASE_NAME=finalproject
       - DATABASE_HOST=db
       - DATABASE_PORT=5432
-      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_USER=hector
       - GF_SECURITY_ADMIN_PASSWORD=managerit 
       - TZ=Europe/Madrid
+
+  jenkins:
+    build: 
+      context: .
+      dockerfile: jk-dockerfile
+    container_name: jenkins
+    restart: always
+    ports:
+      - "9000:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./runs/jkrun.sh:/tmp/jkrun.sh
+      - ./jenkins/plugins.txt:/tmp/plugins.txt
+      - ./jenkins/jenkins.install.UpgradeWizard.state:/var/lib/jenkins/jenkins.install.UpgradeWizard.state
+      - ./jenkins/default-user.groovy:/var/lib/jenkins/init.groovy.d/default-user.groovy
+    environment:
+      - JENKINS_USER=hector
+      - JENKINS_PASS=managerit
 
 volumes:
   postgres-db:
   pgadmin-data:
   grafana-data:
+  jenkins-data:
