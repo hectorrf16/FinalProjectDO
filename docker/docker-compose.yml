@@ -48,7 +48,7 @@ services:
     volumes:
       - pgadmin-data:/pgadmin4
       - ./database/pgadmin/servers.json:/pgadmin4/servers.json
-      - ./database/pgadmin/pgpassfile:/tmp/pgpassfile
+      - ./database/pgadmin/pgpass:/tmp/pgpass
       - ./runs/pgrun.sh:/tmp/pgrun.sh
 
   

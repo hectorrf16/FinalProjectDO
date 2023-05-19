@@ -1,5 +1,6 @@
 # Final Project Bootcamp DevOps 2023 - GeeksHubs
-##### Este es el proyecto final del Bootcamp de DevOps de Héctor Rodríguez Fusté impartido por GeeksHbubs 
+##### Este es el proyecto final del Bootcamp de DevOps de Héctor Rodríguez Fusté impartido por GeeksHbubs
+###### <u>**Nota:** Todas las contraseñas de este repositorio han sido creadas específicamente para este proyecto, cualquier coincidencia con otros sistemas es mera casualidad.</u>
 ----
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/hectorrf16/FinalProjectDO?style=plastic)
 ![GitHub Lincense](https://img.shields.io/github/license/hectorrf16/FinalProjectDO?style=plastic)

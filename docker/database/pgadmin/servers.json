@@ -7,7 +7,7 @@
             "Port": 5432,
             "MaintenanceDB": "postgres",
             "Username": "hector",
-            "Password": "managerit",
+            "PassFile": "/pgpass",
             "UseSSHTunnel": 0,
             "TunnelPort": "22",
             "TunnelAuthentication": 0,
