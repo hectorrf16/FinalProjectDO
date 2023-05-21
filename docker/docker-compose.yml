@@ -92,13 +92,10 @@ services:
     volumes:
       - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./runs/jkrun.sh:/tmp/jkrun.sh
-      - ./jenkins/plugins.txt:/tmp/plugins.txt
-      - ./jenkins/jenkins.install.UpgradeWizard.state:/var/lib/jenkins/jenkins.install.UpgradeWizard.state
-      - ./jenkins/default-user.groovy:/var/lib/jenkins/init.groovy.d/default-user.groovy
+      - ./jenkins/config:/var/jenkins_home
     environment:
-      - JENKINS_USER=hector
-      - JENKINS_PASS=managerit
+      - JENKINS_ADMIN_ID=hector
+      - JENKINS_ADMIN_PASSWORD=managerit
 
 volumes:
   postgres-db:
