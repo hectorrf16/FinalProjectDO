@@ -80,25 +80,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=managerit 
       - TZ=Europe/Madrid
 
-  jenkins:
-    build: 
-      context: .
-      dockerfile: jk-dockerfile
-    container_name: jenkins
-    restart: always
-    ports:
-      - "9000:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins-data:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./jenkins/config:/var/jenkins_home
-    environment:
-      - JENKINS_ADMIN_ID=hector
-      - JENKINS_ADMIN_PASSWORD=managerit
-
 volumes:
   postgres-db:
   pgadmin-data:
   grafana-data:
-  jenkins-data:
