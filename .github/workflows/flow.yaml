@@ -13,6 +13,6 @@ jobs:
       - name: check out repository code
         uses: actions/checkout@v3
       - name: init docker compose
-        run: docker compose up -d -f ./docker/docker-compose.yml
+        run: docker compose --file ./docker/docker-compose.yml up -d
       - name: checking docker run
         run: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
