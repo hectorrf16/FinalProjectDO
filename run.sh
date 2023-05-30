@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if test $# -lt 1
+then
+    exit 1
+fi
+
 containers=("app" "pgadmin" "grafana" "postgres")
 options=("Local Instance" "Cloud Instance")
 localoption=("Install" "Start" "Repair" "Uninstall" "Upload Images to Docker Hub")
@@ -94,7 +99,7 @@ case $opt in
             "Uninstall")
                 cd docker
                 echo "Uninstalling local instance"
-                sudo docker compose down && sudo docker volume rm docker_postgres-db docker_grafana-data docker_pgadmin-data docker_jenkins-data
+                sudo docker compose down && sudo docker volume rm docker_postgres-db docker_grafana-data docker_pgadmin-data
                 sudo docker ps
                 ;;
             "Upload Images to Docker Hub")
