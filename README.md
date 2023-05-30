@@ -12,7 +12,7 @@
 - [X] Sistema de Integración Continua - https://github.com/hectorrf16/FinalProjectDO
 - [X] Aplicación totalmente Contenerizada - Imagen en https://hub.docker.com/r/hectorrf16/finalprojectdo
 - [X] Orquestador de Contenedores
-- [ ] Sistema Automatizado de Despliegue con Jenkins
+- [ ] Sistema Automatizado de Despliegue con Github Actions
 - [ ] Sistema de Monitorización
 - [ ] Sistema de Recogida de información de Contenedores con Prometheus
 - [X] Sistema de Exposición de información de Contenedores en Grafana
@@ -66,24 +66,23 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 │   │   ├── "server.key"
 │   │   ├── "query.sql"
 │   │   ├── "pgadmin"
-│   │   │   ├── "pgpassfile"
+│   │   │   ├── "pgpass"
 │   │   │   └── "servers.json"
 │   │   ├── "postgresql.conf"
 │   │   └── "server.crt"
 │   ├── "docker-compose.yml"
-│   ├── "app"
-│   │   ├── "app.py"
-│   │   ├── "views"
-│   │   │   └── "home.tpl"
-│   │   ├── "static"
-│   │   │   ├── "css"
-│   │   │   │   ├── "materialize.css"
-│   │   │   │   └── "materialize.min.css"
-│   │   │   └── "js"
-│   │   │       ├── "materialize.min.js"
-│   │   │       └── "materialize.js"
-│   │   └── "requirements.txt"
-│   └── "dockerfile"
+│   └── "app"
+│       ├── "app.py"
+│       ├── "views"
+│       │   └── "home.tpl"
+│       ├── "static"
+│       │   ├── "css"
+│       │   │   ├── "materialize.css"
+│       │   │   └── "materialize.min.css"
+│       │   └── "js"
+│       │       ├── "materialize.min.js"
+│       │       └── "materialize.js"
+│       └── "requirements.txt"
 ├── "Proyecto Final Bootcamp DevOps.pdf"
 ├── "LICENSE"
 ├── "README.md"
@@ -98,7 +97,7 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
     ├── "repairmenu.png"
     └── "dockerlist.png"
 
-14 directories, 36 files
+14 directories, 35 files
 ```
 
 ## **CONTAINER**
@@ -144,7 +143,7 @@ Una vez ejecutado el script (`$ sh ./run.sh`), este sera el menu que vereis y qu
 ## **ORQUESTADOR CONTAINERS**
 Aqui vamos a tener dos orquestradores de containers. El de instalacion local sera docker-compose y el de cloud sera Kubernetes. He decidido utilizar diferentes por una simpple cosa, kubernetes es mas facil de instalar en cloud, ya que muchos servicios te dan la solucion ya montada y solo tienes que crear los clusters y distribuir, en vez de hacer instalacion en local con minikube o kind, lanzar creacion cluster, hacerla funcionar y de ahi lanzar el deploy de los Pods / containers. Como hago todo desde una maquina en WSL desde win 11, he preferido hacer la configuracion e instalacion lo mas facil y ligera posible.
 ## **SISTEMA DE DESPLIEGUE**
-Para el despliegue vamos a utilizar jenkins, ya que es facil de configurar, de instalar y por lo menos es uno que ya conozco, por lo que no tengo que perder tiempo aprendiendo a utilizarlo, configurarlo y debuggear cualquier error que me de.
+Antes de empezar a intentar implementar esta seccion, tenia pensado utilizar jenkins, ya que me era conocido, pero no lo habia utilizado tanto hasta ahora.. que al ver como costaba implementarlo y lo dificil que era de replicar la misma configuracion de forma automatica sin "hardcodear" todo... decidi retirarlo e utilizar Github Actions, que era mas facil y no dependia de tener que configurar/montar/lanzar algo.
 ## **SISTEMA DE MONITORIZACIÓN**
 ## **SISTEMA DE RECOGIDA Y EXPOSICIÓN DE DATOS**
 El sistema de cecogida y exposicion de datos sera Grafana y Prometheus, Grafana para exponer los datos en varios dashboards y Prometheus para obtener los datos de docker y trasportarlos a grafana, para que los exponga.
