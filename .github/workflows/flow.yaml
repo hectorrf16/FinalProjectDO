@@ -12,7 +12,7 @@ jobs:
       - run: echo "Job automatically triggered by ${{ github.event_name}} event."
       - name: check out repository code
         uses: actions/checkout@v3
-      - name: init docker compose
+      - name: init app deployment
         run: docker compose --file ./docker/docker-compose.yml up -d
       - name: checking docker run
         run: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
