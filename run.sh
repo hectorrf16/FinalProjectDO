@@ -18,7 +18,7 @@ menu() {
     containers=("app" "pgadmin" "grafana" "postgres")
     options=("Local Instance" "Cloud Instance")
     localoption=("Install" "Start" "Repair" "Uninstall" "Upload Images to Docker Hub")
-    repairoptions=("Postgres" "App" "PgAdmin" "Grafana" "Jenkins" "All")
+    repairoptions=("Postgres" "App" "PgAdmin" "Grafana" "All")
     echo -e "What do you want to do?\n"
     select opt in "${options[@]}" Quit
     do
@@ -54,10 +54,6 @@ menu() {
                                     clear
                                     echo "First Config - PgAdmin"
                                     sudo docker exec -it pgadmin sh /tmp/pgrun.sh
-                                    # sleep 2
-                                    # clear
-                                    # echo "First Config - Jenkins"
-                                    # sudo docker exec -it jenkins sh /tmp/jkrun.sh
                             else
                                 echo "Error: Files doesn't exists, dowloading" 
                                 if [ -d "$dir/.git" ]
@@ -112,20 +108,6 @@ menu() {
                                         clear
                                         echo "First Config - Grafana"
                                         sudo docker exec -it grafana sh /tmp/grafanarun.sh
-                                        break;;
-                                    "Jenkins")
-                                        clear
-                                        # echo "Restoring Jenkins instance"
-                                        # if ['docker ps -a -f status=running --format 'table {{.Names}}' -f 'name=jenkins' | awk 'NR>1{print}'' -eq 'jenkins']
-                                        # then
-                                        sudo docker stop jenkins && sudo docker remove jenkins && sudo docker volume rm docker_jenkins-data && sudo docker image rm docker-jenkins --force && sudo docker compose up -d jenkins
-                                        # else
-                                        #     sudo docker image rm docker-jenkins --force && sudo docker compose up -d jenkins
-                                        # fi
-                                        # sleep 2
-                                        # clear
-                                        # echo "First Config - Jenkins"
-                                        # sudo docker exec -it jenkins sh /tmp/jkrun.sh
                                         break;;
                                     "All")
                                         clear

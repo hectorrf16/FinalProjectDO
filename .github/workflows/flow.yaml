@@ -1,9 +1,20 @@
----
 name: FinalProjectDO Workflow
+run-name: Testing workflow with GitHub Actions
 on:
   push:
     branches:
-      - main
+      - stg
 
 jobs:
-  
+  Testing:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Job automatically triggered by ${{ github.event_name}} event."
+      - name: check out repository code
+        uses: actions/checkout@v3
+      - name: init docker compose
+        uses: cloudposse/github-action-docker-compose-test-run@main
+        with:
+          file: docker/docker-compose.yml
+          service: app
+          command: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
