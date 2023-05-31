@@ -24,20 +24,20 @@ case $opt in
                         cd docker
                         sudo docker compose up -d 
                         sleep 3
-                        clear
+                        # clear
                         sudo docker ps
                         sleep 5
-                        clear
+                        # clear
                         echo "First Config - Postgres"
-                        sudo docker exec -it postgres sh /tmp/psrun.sh > /dev/null 2>&1
+                        sudo docker exec -it postgres sh /tmp/psrun.sh
                         sleep 2
-                        clear
+                        # clear
                         echo "First Config - Grafana"
-                        sudo docker exec -it grafana sh /tmp/grafanarun.sh > /dev/null 2>&1
+                        sudo docker exec -it grafana sh /tmp/grafanarun.sh
                         sleep 2
-                        clear
+                        # clear
                         echo "First Config - PgAdmin"
-                        sudo docker exec -it pgadmin sh /tmp/pgrun.sh > /dev/null 2>&1
+                        sudo docker exec -it pgadmin sh /tmp/pgrun.sh
                 else
                     echo "Error: Files doesn't exists, dowloading" 
                     if [ -d "$dir/.git" ]
@@ -57,39 +57,39 @@ case $opt in
                 cd docker
                 case $ropt in
                     "Postgres")
-                        clear
+                        # clear
                         echo "Restoring Postgres instance"
                         sudo docker stop postgres && sudo docker remove postgres && sudo docker volume rm docker_postgres-db && sudo docker compose up -d db
                         sleep 5
-                        clear
+                        # clear
                         echo "First Config - Postgres"
                         sudo docker exec -ti postgres sh /tmp/psrun.sh
                         ;;
                     "App")
-                        clear
+                        # clear
                         echo "Restoring App instance"
                         sudo docker stop python-app && sudo docker remove python-app && sudo docker compose up -d app
                         ;;
                     "PgAdmin")
-                        clear
+                        # clear
                         echo "Restoring PgAdmin instance"
                         sudo docker stop pgadmin && sudo docker remove pgadmin && sudo docker volume rm docker_pgadmin-data && sudo docker compose up -d pgadmin
                         sleep 2
-                        clear
+                        # clear
                         echo "First Config - PgAdmin"
                         sudo docker exec -ti pgadmin sh /tmp/pgrun.sh
                         ;;
                     "Grafana")
-                        clear
+                        # clear
                         echo "Restoring Grafana instance"
                         sudo docker stop grafana && sudo docker remove grafana && sudo docker volume rm docker_grafana-data && sudo docker compose up -d grafana
                         sleep 2
-                        clear
+                        # clear
                         echo "First Config - Grafana"
                         sudo docker exec -it grafana sh /tmp/grafanarun.sh
                         ;;
                     "All")
-                        clear
+                        # clear
                         echo "Restoring all instances"
                         sudo docker compose down && sudo docker componse up -d
                         ;;
@@ -120,3 +120,5 @@ case $opt in
         ;;
     *) echo "Invalid option \"$REPLY\"";;
 esac
+
+exit 0;
