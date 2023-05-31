@@ -12,7 +12,7 @@
 - [X] Sistema de Integración Continua - https://github.com/hectorrf16/FinalProjectDO
 - [X] Aplicación totalmente Contenerizada - Imagen en https://hub.docker.com/r/hectorrf16/finalprojectdo
 - [X] Orquestador de Contenedores
-- [ ] Sistema Automatizado de Despliegue con Github Actions
+- [X] Sistema Automatizado de Despliegue con Github Actions
 - [ ] Sistema de Monitorización
 - [ ] Sistema de Recogida de información de Contenedores con Prometheus
 - [X] Sistema de Exposición de información de Contenedores en Grafana
@@ -23,10 +23,6 @@
 - [ ] Creación y Aprovisionamiento de la Infra
 - [ ] Creación de Tests de estrés
 - [ ] Analisis perfomance de la Infra
-
-# Diseño infraestructura
-<!-- ![Diagrama Infra](https://github.com/hectorrf16/FinalProjectDO/screenshots/diagrama.png) This should be uncomment when project is finished -->
-![Diagrama Infra](screenshots/diagrama.png)
 
 # Memoria
 ## **APLICACIÓN** 
@@ -61,31 +57,31 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 │   │   ├── "pgrun.sh"
 │   │   └── "grafanarun.sh"
 │   ├── "database"
-│   │   ├── "psrun.sh"
-│   │   ├── "server.csr"
-│   │   ├── "server.key"
 │   │   ├── "query.sql"
 │   │   ├── "pgadmin"
 │   │   │   ├── "pgpass"
 │   │   │   └── "servers.json"
-│   │   ├── "postgresql.conf"
-│   │   └── "server.crt"
+│   │   └── "postgresql.conf"
 │   ├── "docker-compose.yml"
-│   └── "app"
-│       ├── "app.py"
-│       ├── "views"
-│       │   └── "home.tpl"
-│       ├── "static"
-│       │   ├── "css"
-│       │   │   ├── "materialize.css"
-│       │   │   └── "materialize.min.css"
-│       │   └── "js"
-│       │       ├── "materialize.min.js"
-│       │       └── "materialize.js"
-│       └── "requirements.txt"
+│   ├── "app"
+│   │   ├── "app.py"
+│   │   ├── "views"
+│   │   │   └── "home.tpl"
+│   │   ├── "static"
+│   │   │   ├── "css"
+│   │   │   │   ├── "materialize.css"
+│   │   │   │   └── "materialize.min.css"
+│   │   │   └── "js"
+│   │   │       ├── "materialize.min.js"
+│   │   │       └── "materialize.js"
+│   │   └── "requirements.txt"
+│   ├── "app-dockerfile"
+│   └── "jenkins"
+│       └── "config"
 ├── "Proyecto Final Bootcamp DevOps.pdf"
 ├── "LICENSE"
 ├── "README.md"
+├── "test.sh"
 ├── "run.sh"
 └── "screenshots"
     ├── "grafanaissue1.png"
@@ -97,7 +93,7 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
     ├── "repairmenu.png"
     └── "dockerlist.png"
 
-14 directories, 35 files
+16 directories, 33 files
 ```
 
 ## **CONTAINER**
@@ -144,9 +140,11 @@ Una vez ejecutado el script (`$ sh ./run.sh`), este sera el menu que vereis y qu
 Aqui vamos a tener dos orquestradores de containers. El de instalacion local sera docker-compose y el de cloud sera Kubernetes. He decidido utilizar diferentes por una simpple cosa, kubernetes es mas facil de instalar en cloud, ya que muchos servicios te dan la solucion ya montada y solo tienes que crear los clusters y distribuir, en vez de hacer instalacion en local con minikube o kind, lanzar creacion cluster, hacerla funcionar y de ahi lanzar el deploy de los Pods / containers. Como hago todo desde una maquina en WSL desde win 11, he preferido hacer la configuracion e instalacion lo mas facil y ligera posible.
 ## **SISTEMA DE DESPLIEGUE**
 Antes de empezar a intentar implementar esta seccion, tenia pensado utilizar jenkins, ya que me era conocido, pero no lo habia utilizado tanto hasta ahora.. que al ver como costaba implementarlo y lo dificil que era de replicar la misma configuracion de forma automatica sin "hardcodear" todo... decidi retirarlo e utilizar Github Actions, que era mas facil y no dependia de tener que configurar/montar/lanzar algo.
+
+En este apartado no hay mucho que explicar, solo se aplican varios comandos de testing para que cada vez que se aplique algo en main sea verificado, pero el testing no genera ninguna aplicacion ni compila nada, ya que no creia necesario tener que subir a docker hub una nueva imagen del container a cada iteracion a main, aunque el "build" de los containers no haya cambiado nada.
 ## **SISTEMA DE MONITORIZACIÓN**
 ## **SISTEMA DE RECOGIDA Y EXPOSICIÓN DE DATOS**
-El sistema de cecogida y exposicion de datos sera Grafana y Prometheus, Grafana para exponer los datos en varios dashboards y Prometheus para obtener los datos de docker y trasportarlos a grafana, para que los exponga.
+El sistema de recogida y exposicion de datos sera Grafana y Prometheus, Grafana para exponer los datos en varios dashboards y Prometheus para obtener los datos de docker y trasportarlos a grafana, para que los exponga. Como grafana y prometheus trabajan tan bien juntos, la configuracion de estos es tan simple como crear un container para cada uno, ponerle como conexion (_datasource.yml_) en grafana la direccion de prometheus con su puerto abierto y ya. 
 # **ISSUES**
 En este apartado vamos a colocar todos los issues que he tenido y que no he podido arreglar y que se quedan para su investigacion. Todo estara documentado en la pagina de issue en [Github](https://github.com/hectorrf16/FinalProjectDO/issues). Tambien al principio de la memoria se puede ver la etiqueta de la cantidad de Issues que hay, por lo que a medida que el projecto avanza, se iran actualizando.
 

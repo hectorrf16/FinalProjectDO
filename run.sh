@@ -5,10 +5,10 @@ then
     exit 1
 fi
 
-containers=("app" "pgadmin" "grafana" "postgres")
+containers=("app" "pgadmin" "grafana" "postgres" "prometheus")
 options=("Local Instance" "Cloud Instance")
 localoption=("Install" "Start" "Repair" "Uninstall" "Upload Images to Docker Hub")
-repairoptions=("Postgres" "App" "PgAdmin" "Grafana" "All")
+repairoptions=("Postgres" "App" "PgAdmin" "Grafana" "Prometheus" "All")
 # echo -e "What do you want to do?\n"
 opt=${options[$1]}
 lopt=${localoption[$2]}
@@ -88,6 +88,15 @@ case $opt in
                         echo "First Config - Grafana"
                         sudo docker exec -it grafana sh /tmp/grafanarun.sh
                         ;;
+                    "Prometheus")
+                        # clear
+                        echo "Restoring Prometheus instance"
+                        sudo docker stop prometheus && sudo docker remove prometheus && sudo docker volume rm docker_prometheus-data && sudo docker compose up -d prometheus
+                        # sleep 2
+                        # clear
+                        # echo "First Config - Prometheus"
+                        # sudo docker exec -it grafana sh /tmp/grafanarun.sh
+                        ;;
                     "All")
                         # clear
                         echo "Restoring all instances"
@@ -99,7 +108,7 @@ case $opt in
             "Uninstall")
                 cd docker
                 echo "Uninstalling local instance"
-                sudo docker compose down && sudo docker volume rm docker_postgres-db docker_grafana-data docker_pgadmin-data
+                sudo docker compose down && sudo docker volume rm docker_postgres-db docker_grafana-data docker_pgadmin-data docker_prometheus-data
                 sudo docker ps
                 ;;
             "Upload Images to Docker Hub")

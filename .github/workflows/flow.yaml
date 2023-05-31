@@ -16,3 +16,9 @@ jobs:
         run: bash ./run.sh 0 0
       - name: checking docker run
         run: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
+      - name: testing dockers repair
+        run: bash ./run.sh 0 2 5  
+      - name: checking docker run after repair
+        run: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
+      - name: testing docker uninstall
+        run: bash ./run.sh 0 3 
