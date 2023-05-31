@@ -29,15 +29,15 @@ case $opt in
                         sleep 5
                         clear
                         echo "First Config - Postgres"
-                        sudo docker exec -it postgres sh /tmp/psrun.sh
+                        sudo docker exec -it postgres sh /tmp/psrun.sh > /dev/null 2>&1
                         sleep 2
                         clear
                         echo "First Config - Grafana"
-                        sudo docker exec -it grafana sh /tmp/grafanarun.sh
+                        sudo docker exec -it grafana sh /tmp/grafanarun.sh > /dev/null 2>&1
                         sleep 2
                         clear
                         echo "First Config - PgAdmin"
-                        sudo docker exec -it pgadmin sh /tmp/pgrun.sh
+                        sudo docker exec -it pgadmin sh /tmp/pgrun.sh > /dev/null 2>&1
                 else
                     echo "Error: Files doesn't exists, dowloading" 
                     if [ -d "$dir/.git" ]
