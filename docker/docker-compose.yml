@@ -93,6 +93,7 @@ services:
       - 9090:9090
     volumes:
       - prometheus-data:/etc/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
 volumes:
   postgres-db:

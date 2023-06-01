@@ -1,9 +1,9 @@
 apiVersion: 1
 
 providers:
-- name: 'database'
+- name: 'Database'
   orgId: 1
-  folder: database
+  folder: Database
   folderUid: Nr4ofiDZk
   type: file
   disableDeletion: false

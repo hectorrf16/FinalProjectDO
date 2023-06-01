@@ -2,6 +2,9 @@
 
 if test $# -lt 1
 then
+    echo 'First param: ("0) Local Instance" "1) Cloud Instance") '
+    echo 'Second param: ("0) Install" "1) Start" "2) Repair" "3) Uninstall" "4) Upload Images to Docker Hub") '
+    echo 'Third param: ("0) Postgres" "1) App" "2) PgAdmin" "3) Grafana" "4) Prometheus" "5) All") '
     exit 1
 fi
 

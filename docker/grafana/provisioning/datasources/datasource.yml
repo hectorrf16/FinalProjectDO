@@ -36,11 +36,11 @@ datasources:
   # <string> url
   url: http://prometheus:9090
   # <string> database password, if used
-  password:
+  password: managerit
   # <string> database user, if used
-  user:
+  user: hector
   # <string> database name, if used
-  database:
+  database: db
   # <bool> enable/disable basic auth
   basicAuth: false
   # <string> basic auth username, if used
