@@ -1,19 +1,17 @@
 name: FinalProjectDO Workflow
 run-name: Testing workflow with GitHub Actions
 on:
-  push:
+  pull_request:
     branches:
-      - stg
+      - main
 
 jobs:
   Testing:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Job automatically triggered by ${{ github.event_name}} event."
+      - run: echo "Job automatically triggered by ${{github.event_name}} event."
       - name: check out repository code
         uses: actions/checkout@v3
-      - name: getting Docker ip
-        run: ifconfig | grep docker | awk -F ': ' '{print $1}' | xargs -i ifconfig '{}' | grep inet | awk '{print $2}'
       - name: init app deployment
         run: bash ./run.sh 0 0
       - name: checking docker run

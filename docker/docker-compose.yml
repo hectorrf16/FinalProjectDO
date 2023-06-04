@@ -7,8 +7,11 @@ services:
     stdin_open: true
     tty: true
     restart: always
+    labels:
+      co.elaist.logs/enabled: true
     volumes:
     - ./app:/app
+    - ./app/logs:/var/logs
     ports:
     - 80:8080
     environment:
@@ -19,6 +22,8 @@ services:
     image: postgres:alpine
     container_name: postgres
     restart: always
+    labels:
+      co.elaist.logs/enabled: true
     environment:
       - POSTGRES_USER=hector
       - POSTGRES_PASSWORD=managerit
@@ -31,11 +36,20 @@ services:
       - ./runs/psrun.sh:/tmp/psrun.sh
       - ./database/postgresql.conf:/tmp/postgresql.conf
       - ./database/query.sql:/tmp/query.sql
+      - ./database/logs:/var/log
+    healthcheck: 
+      test: ["CMD-SHELL", "pg_isready", "-d", "POSTGRES_DB"]
+      interval: 5m
+      timeout: 30s
+      retries: 5
+      start_period: 50s
   
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
     restart: always
+    labels:
+      co.elaist.logs/enabled: false
     depends_on:
       - db
     environment:
@@ -59,6 +73,8 @@ services:
     container_name: grafana
     restart: always
     user: root
+    labels:
+      co.elaist.logs/enabled: false
     depends_on:
       - db
     ports: 
@@ -80,12 +96,23 @@ services:
       - GF_SECURITY_ADMIN_USER=hector
       - GF_SECURITY_ADMIN_PASSWORD=managerit 
       - TZ=Europe/Madrid
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "curl --silent --fail localhost:3000 || exit 1",
+      ]
+      interval: 5m
+      timeout: 30s
+      retries: 5
+      start_period: 50s
 
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     restart: always
     user: root
+    labels:
+      co.elaist.logs/enabled: false
     depends_on:
       - db
       - grafana
@@ -94,9 +121,98 @@ services:
     volumes:
       - prometheus-data:/etc/prometheus
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    healthcheck:
+      test: [
+        "CMD",
+        "curl" ,"-s", "-f", "http://localhost:9090/",
+      ]
+      interval: 5m
+      timeout: 30s
+      retries: 5
+      start_period: 50s
+
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.7.1
+    container_name: elastic
+    ports:
+      - 9200:9200
+    labels:
+      co.elastic.logs/enabled: false
+    environment:
+      - ELASTIC_USER=hector
+      - ELASTIC_PASSWORD=managerit
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms4g -Xmx4g
+      - xpack.security.enabled=false
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - TAKE_FILE_OWNERSHIP=1
+    volumes:
+      - elastic-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "curl --silent --fail localhost:9200/_cluster/health || exit 1",
+      ]
+      interval: 5m
+      timeout: 30s
+      retries: 5
+      start_period: 50s
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.7.1
+    container_name: kibana
+    ports:
+      - 5601:5601
+    labels:
+      co.elaist.logs/enabled: false
+    environment:
+      - ELASTIC_USER=hector
+      - ELASTIC_PASSWORD=managerit
+      - SERVER_NAME=kibana
+      - ELASTICSEARCH_HOSTS=http://elastic:9200
+      # - SERVER_HOST=localhost
+    volumes:
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    # command: "bin/kibana-setup --enrollment-token "
+    depends_on:
+      - elastic
+    healthcheck:
+      test: [
+        "CMD-SHELL", 
+        "curl --silent --fail localhost:5601 || exit 1",
+        ]
+      interval: 5m
+      timeout: 30s
+      retries: 5
+      start_period: 50s
+  
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.7.1
+    container_name: filebeat
+    command: --strict.perms=false
+    user: root
+    restart: always
+    labels:
+      co.elastic.logs/enabled: false
+    environment:
+      - ELASTIC_PASSWORD=managerit
+    volumes:
+      - filebeat-data:/usr/share/filebeat/data
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./database/logs:/var/log/postgres/
+      - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - elastic
+      - kibana
+
 
 volumes:
   postgres-db:
   pgadmin-data:
   grafana-data:
   prometheus-data:
+  elastic-data:
+  filebeat-data:

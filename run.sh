@@ -4,14 +4,14 @@ if test $# -lt 1
 then
     echo 'First param: ("0) Local Instance" "1) Cloud Instance") '
     echo 'Second param: ("0) Install" "1) Start" "2) Repair" "3) Uninstall" "4) Upload Images to Docker Hub") '
-    echo 'Third param: ("0) Postgres" "1) App" "2) PgAdmin" "3) Grafana" "4) Prometheus" "5) All") '
+    echo 'Third param: ("0) Postgres" "1) App" "2) PgAdmin" "3) Grafana" "4) Prometheus" "5) Elastic" "6) Kibana" "7) Filebeat" "8) All") '
     exit 1
 fi
 
-containers=("app" "pgadmin" "grafana" "postgres" "prometheus")
+containers=("app" "pgadmin" "grafana" "postgres" "prometheus" "elastic" "kibana" "filebeat")
 options=("Local Instance" "Cloud Instance")
 localoption=("Install" "Start" "Repair" "Uninstall" "Upload Images to Docker Hub")
-repairoptions=("Postgres" "App" "PgAdmin" "Grafana" "Prometheus" "All")
+repairoptions=("Postgres" "App" "PgAdmin" "Grafana" "Prometheus" "Elastic" "Kibana" "Filebeat" "All")
 # echo -e "What do you want to do?\n"
 opt=${options[$1]}
 lopt=${localoption[$2]}
@@ -100,6 +100,18 @@ case $opt in
                         # echo "First Config - Prometheus"
                         # sudo docker exec -it grafana sh /tmp/grafanarun.sh
                         ;;
+                    "Elastic")
+                        echo "Restoring Elastic instance"
+                        sudo docker stop elastic && sudo docker remove elastic && sudo docker volume rm docker_elastic-data && sudo docker compose up -d elastic
+                        ;;
+                    "Kibana")
+                        echo "Restoring Kibana instance"
+                        sudo docker stop kibana && sudo docker remove kibana && sudo docker compose up -d kibana
+                        ;;
+                    "Filebeat")
+                        echo "Restoring Filebeat instance"
+                        sudo docker stop filebeat && sudo docker remove filebeat && sudo docker volume rm docker_filebeat-data && sudo docker compose up -d filebeat
+                        ;;
                     "All")
                         # clear
                         echo "Restoring all instances"
@@ -111,7 +123,7 @@ case $opt in
             "Uninstall")
                 cd docker
                 echo "Uninstalling local instance"
-                sudo docker compose down && sudo docker volume rm docker_postgres-db docker_grafana-data docker_pgadmin-data docker_prometheus-data
+                sudo docker compose down && sudo docker volume rm docker_postgres-db docker_grafana-data docker_pgadmin-data docker_prometheus-data docker_elastic-data docker_filebeat-data
                 sudo docker ps
                 ;;
             "Upload Images to Docker Hub")

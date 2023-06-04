@@ -555,7 +555,7 @@
         "x": 0,
         "y": 15
       },
-      "id": 7,
+      "id": 12,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -565,7 +565,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^\\{__name__=\"engine_daemon_container_states_containers\", instance=\"172\\.17\\.0\\.1:9393\", job=\"docker\", state=\"paused\"\\}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
@@ -579,7 +579,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "engine_daemon_container_states_containers{state=\"paused\"}",
+          "expr": "sum by(__name__,type)(engine_daemon_container_states_containers{state=\"running\"}) + sum by(__name__,type)(engine_daemon_container_states_containers{state=\"stopped\"}) + sum by(__name__,type)(engine_daemon_container_states_containers{state=\"paused\"}) ",
           "format": "heatmap",
           "instant": false,
           "interval": "",
@@ -588,7 +588,7 @@
           "refId": "A"
         }
       ],
-      "title": "Containers Paused",
+      "title": "Total Containers",
       "type": "stat"
     },
     {
@@ -756,6 +756,73 @@
         "x": 9,
         "y": 15
       },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^\\{__name__=\"engine_daemon_container_states_containers\", instance=\"172\\.17\\.0\\.1:9393\", job=\"docker\", state=\"paused\"\\}$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "engine_daemon_container_states_containers{state=\"paused\"}",
+          "format": "heatmap",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Containers Paused",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 12,
+        "y": 15
+      },
       "id": 8,
       "options": {
         "colorMode": "value",
@@ -816,7 +883,7 @@
       "gridPos": {
         "h": 8,
         "w": 3,
-        "x": 12,
+        "x": 15,
         "y": 15
       },
       "id": 9,

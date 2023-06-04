@@ -13,8 +13,8 @@
 - [X] Aplicación totalmente Contenerizada - Imagen en https://hub.docker.com/r/hectorrf16/finalprojectdo
 - [X] Orquestador de Contenedores
 - [X] Sistema Automatizado de Despliegue con Github Actions
-- [ ] Sistema de Monitorización
-- [ ] Sistema de Recogida de información de Contenedores con Prometheus
+- [ ] Sistema de Monitorización con Elastic / Kibana / FileBeat
+- [X] Sistema de Recogida de información de Contenedores con Prometheus
 - [X] Sistema de Exposición de información de Contenedores en Grafana
 
 # Posibles Mejoras
@@ -31,7 +31,7 @@ Este proyecto final va a ser el principio de una idea que tengo en mente.
 
 La idea es tener una herramienta para mi mujer, pero que no influya de donde acceda, por lo que no quiero tener una app compilada directamente en una tecnologia (Android / iOS), que sea multiplataforma, que no tenga que pasar por ninguna store con sus procesos de aprobacion.
 
-El problema que ha surgido, para presentar el proyecto, es la falta de tiempo... por lo que he tenido que hacer un MockUp en Python para tener "algo" que mostrar visualmente y asi desarrollar la infraestructura necesaria para el projecto, pero la idea final para mi propio proyecto, seria modificar dicho Python y portarlo a Vue.js como backend e [Ionic](https://ionicframework.com) como frontend.
+El problema que ha surgido, para presentar el proyecto, es la falta de tiempo... por lo que he tenido que hacer un MockUp en Python para tener "algo" que mostrar visualmente y asi desarrollar la infraestructura necesaria para el projecto, pero la idea final para mi propio proyecto, seria modificar dicho Python y portarlo a javascript utilizando cualquier libreria tipo _vue.js_ o _react_.
 
 La aplicacion va a ser desarrollada en docker para poder aplicarla en local, por la facilidad de creacion de contenedores, o por que ya tengo un background con docker y me es super facil de aplicar la idea sin "perder" tiempo en aprender, ya que ese tiempo me gustaria implementarlo, en por ejemplo, aprender K8s, AWS etc... que es lo nuevo que he aprendido aqui.
 
@@ -50,6 +50,7 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 │   │       ├── "datasources"
 │   │       │   ├── "datasource.yml"
 │   │       │   └── "dashboards"
+│   │       │       ├── "prometheus_stats.json"
 │   │       │       └── "home.json"
 │   │       └── "dashboards.yml"
 │   ├── "runs"
@@ -63,6 +64,8 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 │   │   │   └── "servers.json"
 │   │   └── "postgresql.conf"
 │   ├── "docker-compose.yml"
+│   ├── "elastic"
+│   ├── "kibana"
 │   ├── "app"
 │   │   ├── "app.py"
 │   │   ├── "views"
@@ -75,13 +78,15 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
 │   │   │       ├── "materialize.min.js"
 │   │   │       └── "materialize.js"
 │   │   └── "requirements.txt"
-│   ├── "app-dockerfile"
-│   └── "jenkins"
-│       └── "config"
+│   ├── "filebeat"
+│   ├── "prometheus"
+│   │   └── "prometheus.yml"
+│   └── "app-dockerfile"
 ├── "Proyecto Final Bootcamp DevOps.pdf"
 ├── "LICENSE"
 ├── "README.md"
 ├── "test.sh"
+├── "test.txt"
 ├── "run.sh"
 └── "screenshots"
     ├── "grafanaissue1.png"
@@ -93,16 +98,20 @@ Aqui teneis la estructura (arbol de carpeta) del proyecto al final de todo el pr
     ├── "repairmenu.png"
     └── "dockerlist.png"
 
-16 directories, 33 files
+18 directories, 36 files
 ```
 
 ## **CONTAINER**
-Como no se como va a acabar el proyecto, la primera idea es de tener 5 contenedores, y si por alguna razón he de añadir mas, ya seria como complemento de alguna utilidad
+Estos son los siguientes contenedores que vamos a utilizar para poder desarollar el projecto, en teoria todo lo que se haga aqui lo continuare para un projecto personal, por lo que ahora voy a tener la _estructura_ del proyecto sin contenido, para no perder tiempo y poder hace lo maximo posible. En total tenemos 8 contenedores:
 - Contenedor con Python para tener una web y poder mostrar la información / datos
 - Contenedor con una base de datos Postgresql para almacenar los datos a mostrar en la web
 - Contenedor con PgAdmin4 para poder modificar la base de datos de forma visual a traves de una web para no tener que estar haciendo siempre queries sql (para testing o rapidos workarounds)
-- Contenedor para el sistema de Monitorización en Grafana
-- Contenedor para hospedar el servicio de Jenkins
+- Contenedor para hospedar el servicio de monitorizacion con Prometheus
+- Contenedor para mostrar la informacion del contenedor de monitorizacion en Grafana
+- Contenedores para recolecta de logs con:
+    -  Elastic
+    -  Kibana
+    -  Filebeat
   
 Aqui teneis imagen para mostrar un poco de informacion de como estan trabajando los contenedores
 <!-- ![Docker List](https://raw.githubusercontent.com/hectorrf16/FinalProjectDO/main/screenshots/dockerlist.png) -->
@@ -155,3 +164,6 @@ En este apartado vamos a colocar todos los issues que he tenido y que no he podi
 > 
 > **17.05.2023** - Respuesta / Solución
 > ![grafana-issue1-fix](screenshots/grafanaissue1-fix.png)
+
+## **SISTEMA DE MONITORIZACION CON PROMETHEUS**
+> **02.06.2023** - Prometheus no era capaz de contactar con el HOST para obtener los datos de metricas de docker, ya que docker estaba en HOST y el propio container no accedia por `_localhost:9393_`, asi que se activo el servicio de metricas por localhost utilizando la direccion ip localhost de docker (`172.22.0.1:9393`) y se añadio esta direccion como Target en prometheus
