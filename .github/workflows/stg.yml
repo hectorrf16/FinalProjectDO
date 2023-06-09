@@ -1,5 +1,5 @@
-name: FinalProjectDO Workflow
-run-name: Testing workflow with GitHub Actions
+name: Staging Workflow
+run-name: Deploying to test
 on:
   push:
     branches:
