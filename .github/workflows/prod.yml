@@ -1,0 +1,41 @@
+name: Production Workflow
+run-name: Testing to deploy to production
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Testing:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Job automatically triggered by ${{github.event_name}} event."
+      - name: check out repository code
+        uses: actions/checkout@v3
+      - name: init app deployment
+        run: bash ./run.sh 0
+      - name: checking docker run
+        run: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
+      - name: testing dockers repair
+        run: bash ./run.sh 2 8  
+      - name: checking docker run after repair
+        run: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
+      - name: testing docker uninstall
+        run: bash ./run.sh 3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2.2.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4.5.0
+        with:
+          images: hectorrf16/finalprojectdo
+        
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
