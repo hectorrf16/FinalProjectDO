@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: app-dockerfile
-    container_name: python-app
+    container_name: app
     stdin_open: true
     tty: true
     restart: always

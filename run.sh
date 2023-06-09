@@ -176,9 +176,13 @@ case $opt in
         echo "Login into Docker Hub"
         sudo docker login
         echo "Uploading images to docker hub"
+        cd docker
+        sudo docker compose up -d
+        cd ../
+        sleep 20
         for i in "${containers[@]}"
         do
-            sudo docker ps | grep $i | awk '{print $2}' | xargs -i docker tag {} hectorrf16/finalprojectdo:$i && docker image push hectorrf16/finalprojectdo:$i
+            sudo docker ps | grep $i | awk '{print $1}' | xargs -i docker commit {} hectorrf16/finalprojectdo:$i && docker image push hectorrf16/finalprojectdo:$i
         done
         ;;
     *)

@@ -1,5 +1,5 @@
 name: Production Workflow
-run-name: Testing to deploy to production
+run-name: Deploy to production
 on:
   pull_request:
     branches:
@@ -27,15 +27,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASS }}
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4.5.0
-        with:
-          images: hectorrf16/finalprojectdo
-        
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4.0.0
-        with:
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Push Docker image
+        run: bash ./run.sh 4
