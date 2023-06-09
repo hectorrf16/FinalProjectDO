@@ -161,7 +161,7 @@ case $opt in
             "All")
                 # clear
                 echo "Restoring all instances"
-                sudo docker compose down && sudo docker componse up -d
+                sudo docker compose down && sudo docker compose up -d
                 ;;
             *) echo "Invalid option \"$REPLY\"";;
         esac
