@@ -1,9 +1,10 @@
 name: FinalProjectDO Workflow
 run-name: Testing workflow with GitHub Actions
 on:
-  pull_request:
+  push:
     branches:
       - main
+      - stg
 
 jobs:
   Testing:
