@@ -3,7 +3,6 @@ run-name: Testing workflow with GitHub Actions
 on:
   push:
     branches:
-      - main
       - stg
 
 jobs:
