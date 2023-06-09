@@ -8,7 +8,7 @@ services:
     tty: true
     restart: always
     labels:
-      co.elaist.logs/enabled: true
+      co.elastic.logs/enabled: true
     volumes:
     - ./app:/app
     - ./app/logs:/var/logs
@@ -23,7 +23,7 @@ services:
     container_name: postgres
     restart: always
     labels:
-      co.elaist.logs/enabled: true
+      co.elastic.logs/enabled: true
     environment:
       - POSTGRES_USER=hector
       - POSTGRES_PASSWORD=managerit
@@ -49,7 +49,7 @@ services:
     container_name: pgadmin
     restart: always
     labels:
-      co.elaist.logs/enabled: false
+      co.elastic.logs/enabled: false
     depends_on:
       - db
     environment:
@@ -74,7 +74,7 @@ services:
     restart: always
     user: root
     labels:
-      co.elaist.logs/enabled: false
+      co.elastic.logs/enabled: false
     depends_on:
       - db
     ports: 
@@ -112,7 +112,7 @@ services:
     restart: always
     user: root
     labels:
-      co.elaist.logs/enabled: false
+      co.elastic.logs/enabled: false
     depends_on:
       - db
       - grafana
@@ -164,16 +164,14 @@ services:
     ports:
       - 5601:5601
     labels:
-      co.elaist.logs/enabled: false
+      co.elastic.logs/enabled: false
     environment:
       - ELASTIC_USER=hector
       - ELASTIC_PASSWORD=managerit
       - SERVER_NAME=kibana
       - ELASTICSEARCH_HOSTS=http://elastic:9200
-      # - SERVER_HOST=localhost
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-    # command: "bin/kibana-setup --enrollment-token "
     depends_on:
       - elastic
     healthcheck:
@@ -199,7 +197,7 @@ services:
     volumes:
       - filebeat-data:/usr/share/filebeat/data
       - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ./database/logs:/var/log/postgres/
+      - ./database/logs/:/var/log/postgres/
       - /var/lib/docker/containers/:/var/lib/docker/containers/:ro
       - /proc:/hostfs/proc:ro
       - /:/hostfs:ro

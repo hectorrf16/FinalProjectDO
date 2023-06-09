@@ -13,12 +13,12 @@ jobs:
       - name: check out repository code
         uses: actions/checkout@v3
       - name: init app deployment
-        run: bash ./run.sh 0 0
+        run: bash ./run.sh 0
       - name: checking docker run
         run: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
       - name: testing dockers repair
-        run: bash ./run.sh 0 2 5  
+        run: bash ./run.sh 2 8  
       - name: checking docker run after repair
         run: docker ps --format '{{.Names}}\t{{.Status}}' | awk -F '\t' '{print $2}'
       - name: testing docker uninstall
-        run: bash ./run.sh 0 3 
+        run: bash ./run.sh 3
